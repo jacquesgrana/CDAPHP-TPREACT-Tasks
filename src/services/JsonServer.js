@@ -41,7 +41,7 @@ export default class JsonServer {
         }),
         method: "POST",
       }).then(function (res) {
-        console.log(res);
+        //console.log(res);
       });
   }
 
@@ -56,7 +56,7 @@ export default class JsonServer {
       }),
       method: "PATCH",
     }).then(function (res) {
-      console.log(res);
+      //console.log(res);
     });
   }
 
@@ -73,6 +73,21 @@ export default class JsonServer {
       .catch((error) => {
         console.log("erreur : ", error);
       });
+  }
+
+  static async patchTaskInDb(taskId, title) {
+    return fetch(`${JsonServer.url}/${taskId}`, {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+          "title": title,
+      }),
+      method: "PATCH",
+    }).then(function (res) {
+      //console.log(res);
+    });
   }
 }
 

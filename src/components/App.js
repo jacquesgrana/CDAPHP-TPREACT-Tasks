@@ -58,7 +58,7 @@ function App() {
     }
   }
 
-  async function addTask(title, mode, id) {
+  async function addTask(title, mode) {
     if(mode === 'create') {
       await JsonServer.addTaskInDb(title);
       const id = getMaxId(tasks) + 1;
@@ -66,13 +66,24 @@ function App() {
       const copy_tasks = [...tasks];
       copy_tasks.push(newTask);
       setTasks((tasks) => copy_tasks);
+      setInputValueForm('');
     }
     else if(mode === 'edit') {
       // id?
-      console.log('id : ', taskId);
+      //console.log('id : ', taskId);
       // appeler fonction async de JsonServer pour le patch avec l'id et title
+      await JsonServer.patchTaskInDb(taskId, title);
       // mettre a jour dans tasks
+      const tasksCopy = [...tasks];
+      tasksCopy.forEach(t => {
+        if(t.id === taskId) t.title = title;
+      })
       // setTasks
+      setTasks(tasks => tasksCopy);
+
+      setTitleForm('Ajouter une tâche');
+      setInputValueForm('');
+      setMode('create');
     }
     
     
@@ -93,7 +104,7 @@ async function loadTasks() {
 
   async function editTask(idTask) {
     const task = await JsonServer.getTaskById(idTask);
-    console.log('task :', task);
+    //console.log('task :', task);
     setMode('edit');
     setTitleForm("Editer une tâche");
     setInputValueForm(task.title);

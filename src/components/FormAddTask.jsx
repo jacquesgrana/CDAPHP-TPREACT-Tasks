@@ -18,7 +18,7 @@ const FormAddTask = (props) => {
         <form
         onSubmit = {(e) => {
             e.preventDefault();
-            props.addTask(inputValue, mode, taskId);
+            props.addTask(inputValue, mode);
             }}
         className="d-flex gap-2 w-50 align-items-center">
         <label className="form-label" htmlFor="title-form-add-task">Titre</label>
