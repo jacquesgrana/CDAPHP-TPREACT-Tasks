@@ -5,6 +5,9 @@ const Task = (props) => {
         {props.task.title}
       </h2>
       <div className="d-flex gap-3">
+      <button
+        onClick={() => props.editTask(props.task.id)}
+         className="btn btn-primary">Editer</button>
         <button
         onClick={() => props.changeDone(props.task.id)}
          className="btn btn-success">{props.task.done ? "Invalider" : "Valider"}</button>

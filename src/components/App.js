@@ -14,7 +14,8 @@ function App() {
     (async () => {
       try {
         loadTasks();
-      } catch (error) {
+      } 
+      catch (error) {
         setError(`Erreur attrapée dans loadTasks` + error);
         console.error(`Erreur attrapée dans loadTasks` + error);
       }
@@ -51,7 +52,7 @@ function App() {
   async function addTask(title) {
     //console.log('dans add task');
     await JsonServer.addTaskInDb(title);
-    // ajouter dans liste et setTasks()
+    // TODO ajouter dans liste et setTasks()
     const id = getMaxId(tasks) + 1;
     const newTask = { id: id, title: title, done: false };
     const copy_tasks = [...tasks];
@@ -59,17 +60,22 @@ function App() {
     setTasks((tasks) => copy_tasks);
   }
 
+async function loadTasks() {
+    const tasksLoaded = await JsonServer.loadTasks();
+    setTasks((tasks) => tasksLoaded);
+  }
+
   function getMaxId(tasks) {
-    let max = -100000;
+    let max = -Number.MAX_VALUE;
     tasks.forEach((t) => {
       if (t.id > max) max = t.id;
     });
     return max;
   }
 
-  async function loadTasks() {
-    const tasksLoaded = await JsonServer.loadTasks();
-    setTasks((tasks) => tasksLoaded);
+  async function editTask(idTask) {
+    const task = await JsonServer.getTaskById(idTask);
+    console.log('task :', task);
   }
 
   return (
@@ -81,6 +87,7 @@ function App() {
         <Task
           key={task.id}
           task={task}
+          editTask={editTask}
           changeDone={changeDone}
           deleteTask={deleteTask}
         />

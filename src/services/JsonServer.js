@@ -59,6 +59,21 @@ export default class JsonServer {
       console.log(res);
     });
   }
+
+  static async getTaskById(idTask) {
+    return fetch(`${JsonServer.url}/${idTask}`)
+      .then((response) => {
+        //console.log('reponse statut : ', response.status);
+        return response.json();
+      })
+      .then((task) => {
+        //console.log(tasks);
+        return task;
+      })
+      .catch((error) => {
+        console.log("erreur : ", error);
+      });
+  }
 }
 
 /*
