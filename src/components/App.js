@@ -21,7 +21,7 @@ function App() {
     })();
   }, []);
 
-  function changeDone(id) {
+  async function changeDone(id) {
     const copy_tasks = [...tasks];
     let done = false;
     copy_tasks.forEach((t) => {
@@ -31,7 +31,7 @@ function App() {
       }
     });
     // TODO faire appel fonction pour faire le changement en BD
-    JsonServer.changeDoneInDb(id, done);
+    await JsonServer.changeDoneInDb(id, done);
     setTasks((tasks) => copy_tasks);
   }
 
@@ -48,9 +48,9 @@ function App() {
     }
   }
 
-  function addTask(title) {
+  async function addTask(title) {
     //console.log('dans add task');
-    const addTask = JsonServer.addTaskInDb(title);
+    await JsonServer.addTaskInDb(title);
     // ajouter dans liste et setTasks()
     const id = getMaxId(tasks) + 1;
     const newTask = { id: id, title: title, done: false };

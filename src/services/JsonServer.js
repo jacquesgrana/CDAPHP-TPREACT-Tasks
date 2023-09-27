@@ -37,6 +37,7 @@ export default class JsonServer {
         },
         body: JSON.stringify({
             "title": title,
+            "done": false
         }),
         method: "POST",
       }).then(function (res) {
