@@ -1,19 +1,30 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const FormAddTask = (props) => {
-    let [inputValue, setInputValue] = useState("");
+    const [inputValue, setInputValue] = useState("");
+    const [mode, setMode] = useState("");
+    const [taskId, setTaskId] = useState(0);
+
+
+    useEffect(() => {
+        setInputValue(props.inputValueForm);
+        setMode(props.mode);
+        setTaskId(props.taskId);
+      }, [props.inputValueForm]);
+
     return (
         <div>
-        <h4>Ajouter une tâche</h4>
+        <h4>{props.titleForm}</h4>
         <form
         onSubmit = {(e) => {
             e.preventDefault();
-            props.addTask(inputValue);
+            props.addTask(inputValue, mode, taskId);
             }}
         className="d-flex gap-2 w-50 align-items-center">
         <label className="form-label" htmlFor="title-form-add-task">Titre</label>
         <input
         onChange={(event) => setInputValue(event.target.value)}
+        value={inputValue}
          className="form-control w-50" type="text" id="title-form-add-task" />
         <button
         className="btn btn-success" type="submit">Valider</button>

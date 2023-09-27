@@ -10,6 +10,15 @@ function App() {
   const [tasks, setTasks] = useState([]);
   const [error, setError] = useState("");
 
+  //let titleForm = "Ajouter une tâche";
+  const [titleForm, setTitleForm] = useState("Ajouter une tâche");
+  //let inputValueForm = "";
+  const [inputValueForm, setInputValueForm] = useState("");
+  //let mode = "create";
+  const [mode, setMode] = useState("create");
+  const [taskId, setTaskId] = useState(0);
+
+
   useEffect(() => {
     (async () => {
       try {
@@ -49,15 +58,24 @@ function App() {
     }
   }
 
-  async function addTask(title) {
-    //console.log('dans add task');
-    await JsonServer.addTaskInDb(title);
-    // TODO ajouter dans liste et setTasks()
-    const id = getMaxId(tasks) + 1;
-    const newTask = { id: id, title: title, done: false };
-    const copy_tasks = [...tasks];
-    copy_tasks.push(newTask);
-    setTasks((tasks) => copy_tasks);
+  async function addTask(title, mode, id) {
+    if(mode === 'create') {
+      await JsonServer.addTaskInDb(title);
+      const id = getMaxId(tasks) + 1;
+      const newTask = { id: id, title: title, done: false };
+      const copy_tasks = [...tasks];
+      copy_tasks.push(newTask);
+      setTasks((tasks) => copy_tasks);
+    }
+    else if(mode === 'edit') {
+      // id?
+      console.log('id : ', taskId);
+      // appeler fonction async de JsonServer pour le patch avec l'id et title
+      // mettre a jour dans tasks
+      // setTasks
+    }
+    
+    
   }
 
 async function loadTasks() {
@@ -76,13 +94,23 @@ async function loadTasks() {
   async function editTask(idTask) {
     const task = await JsonServer.getTaskById(idTask);
     console.log('task :', task);
+    setMode('edit');
+    setTitleForm("Editer une tâche");
+    setInputValueForm(task.title);
+    setTaskId(idTask);
   }
 
   return (
     <div className="App container">
       <h1 className="mt-5 h1 text-center">Gestion des tâches</h1>
       {error && <h2 className="text-danger">{error}</h2>}
-      <FormAddTask addTask={addTask} />
+      <FormAddTask 
+      taskId = {taskId}
+      mode = {mode}
+      titleForm= {titleForm}
+      inputValueForm= {inputValueForm}
+      addTask={addTask} 
+      />
       {tasks.map((task) => (
         <Task
           key={task.id}
