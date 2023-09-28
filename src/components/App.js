@@ -79,7 +79,7 @@ function App() {
 
   async function loadTasks() {
     const tasksLoaded = await JsonServer.loadTasks();
-    tasksLoaded.sort((a, b) => a.done - b.done);
+    //tasksLoaded.sort((a, b) => a.done - b.done);
     setTasks((tasks) => tasksLoaded);
   }
 
@@ -111,9 +111,10 @@ function App() {
         inputValueForm={inputValueForm}
         addTask={addTask}
       />
-      {tasks.map((task) => (
+      {tasks.sort((a, b) => a.done - b.done).map((task) => (
         <Task
           key={task.id}
+          
           task={task}
           editTask={editTask}
           changeDone={changeDone}
@@ -123,5 +124,5 @@ function App() {
     </div>
   );
 }
-
+//.sort((a, b) => a.done - b.done)
 export default App;

@@ -2,13 +2,13 @@
   "tasks": [
     {
       "title": "brosser les chats",
-      "done": true,
+      "done": false,
       "id": 1
     },
     {
       "id": 2,
       "title": "faire les courses",
-      "done": false
+      "done": true
     },
     {
       "id": 3,
@@ -23,12 +23,12 @@
     {
       "id": 5,
       "title": "manger les courses",
-      "done": true
+      "done": false
     },
     {
       "id": 6,
       "title": "manger les chats",
-      "done": false
+      "done": true
     },
     {
       "title": "manger les chiens",
