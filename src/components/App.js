@@ -18,13 +18,11 @@ function App() {
   const [mode, setMode] = useState("create");
   const [taskId, setTaskId] = useState(0);
 
-
   useEffect(() => {
     (async () => {
       try {
         loadTasks();
-      } 
-      catch (error) {
+      } catch (error) {
         setError(`Erreur attrapée dans loadTasks` + error);
         console.error(`Erreur attrapée dans loadTasks` + error);
       }
@@ -50,46 +48,35 @@ function App() {
       await JsonServer.deleteTaskInDb(id);
       const filteredTasks = tasks.filter((t) => t.id !== id);
       setTasks((tasks) => filteredTasks);
-    } 
-    catch (error) {
-      //console.error(`Erreur attrapée handleClickDelete`);
+    } catch (error) {
       setError(error);
       loadTasks();
     }
   }
 
   async function addTask(title, mode) {
-    if(mode === 'create') {
+    if (mode === "create") {
       await JsonServer.addTaskInDb(title);
       const id = getMaxId(tasks) + 1;
       const newTask = { id: id, title: title, done: false };
       const copy_tasks = [...tasks];
       copy_tasks.push(newTask);
       setTasks((tasks) => copy_tasks);
-      setInputValueForm('');
-    }
-    else if(mode === 'edit') {
-      // id?
-      //console.log('id : ', taskId);
-      // appeler fonction async de JsonServer pour le patch avec l'id et title
+      setInputValueForm("");
+    } else if (mode === "edit") {
       await JsonServer.patchTaskInDb(taskId, title);
-      // mettre a jour dans tasks
       const tasksCopy = [...tasks];
-      tasksCopy.forEach(t => {
-        if(t.id === taskId) t.title = title;
-      })
-      // setTasks
-      setTasks(tasks => tasksCopy);
-
-      setTitleForm('Ajouter une tâche');
-      setInputValueForm('');
-      setMode('create');
+      tasksCopy.forEach((t) => {
+        if (t.id === taskId) t.title = title;
+      });
+      setTasks((tasks) => tasksCopy);
+      setTitleForm("Ajouter une tâche");
+      setInputValueForm("");
+      setMode("create");
     }
-    
-    
   }
 
-async function loadTasks() {
+  async function loadTasks() {
     const tasksLoaded = await JsonServer.loadTasks();
     setTasks((tasks) => tasksLoaded);
   }
@@ -105,7 +92,7 @@ async function loadTasks() {
   async function editTask(idTask) {
     const task = await JsonServer.getTaskById(idTask);
     //console.log('task :', task);
-    setMode('edit');
+    setMode("edit");
     setTitleForm("Editer une tâche");
     setInputValueForm(task.title);
     setTaskId(idTask);
@@ -115,12 +102,12 @@ async function loadTasks() {
     <div className="App container">
       <h1 className="mt-5 h1 text-center">Gestion des tâches</h1>
       {error && <h2 className="text-danger">{error}</h2>}
-      <FormAddTask 
-      taskId = {taskId}
-      mode = {mode}
-      titleForm= {titleForm}
-      inputValueForm= {inputValueForm}
-      addTask={addTask} 
+      <FormAddTask
+        taskId={taskId}
+        mode={mode}
+        titleForm={titleForm}
+        inputValueForm={inputValueForm}
+        addTask={addTask}
       />
       {tasks.map((task) => (
         <Task

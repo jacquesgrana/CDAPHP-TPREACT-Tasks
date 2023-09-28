@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const FormAddTask = (props) => {
     const [inputValue, setInputValue] = useState("");
-    const [mode, setMode] = useState("");
+    const mode = useRef("");
     const [taskId, setTaskId] = useState(0);
 
 
     useEffect(() => {
         setInputValue(props.inputValueForm);
-        setMode(props.mode);
+        //setMode(props.mode);
+        mode.current = props.mode;
         setTaskId(props.taskId);
       }, [props.inputValueForm]);
 
@@ -18,7 +19,7 @@ const FormAddTask = (props) => {
         <form
         onSubmit = {(e) => {
             e.preventDefault();
-            props.addTask(inputValue, mode);
+            props.addTask(inputValue, mode.current);
             }}
         className="d-flex gap-2 w-50 align-items-center">
         <label className="form-label" htmlFor="title-form-add-task">Titre</label>
