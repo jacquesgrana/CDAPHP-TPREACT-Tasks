@@ -40,6 +40,7 @@ function App() {
     });
     // TODO faire appel fonction pour faire le changement en BD
     await JsonServer.changeDoneInDb(id, done);
+    copy_tasks.sort((a, b) => Number(a.done) - Number(b.done));
     setTasks((tasks) => copy_tasks);
   }
 

@@ -8,7 +8,7 @@
     {
       "id": 2,
       "title": "faire les courses",
-      "done": true
+      "done": false
     },
     {
       "id": 3,
@@ -18,12 +18,12 @@
     {
       "id": 4,
       "title": "ranger les courses",
-      "done": false
+      "done": true
     },
     {
       "id": 5,
       "title": "manger les courses",
-      "done": false
+      "done": true
     },
     {
       "id": 6,
@@ -33,11 +33,12 @@
     {
       "title": "manger les chiens",
       "id": 7,
-      "done": true
+      "done": false
     },
     {
       "title": "ranger les chiens",
-      "id": 8
+      "id": 8,
+      "done": false
     }
   ]
 }
